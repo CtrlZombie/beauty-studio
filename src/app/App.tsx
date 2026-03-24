@@ -28,7 +28,6 @@ function App() {
     <div className="min-h-screen bg-gradient-to-br from-pink-50 via-white to-purple-50">
       <Toaster position="top-center" richColors />
       
-      {/* Hero секция */}
       <section className="relative overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-r from-pink-100/50 to-purple-100/50" />
         <div className="container mx-auto px-4 py-20 relative">
@@ -51,7 +50,6 @@ function App() {
         </div>
       </section>
 
-      {/* Категории */}
       <section className="container mx-auto px-4 py-16">
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-16">
           {categories.map((cat) => (
@@ -69,7 +67,6 @@ function App() {
         </div>
       </section>
 
-      {/* Услуги */}
       <section className="container mx-auto px-4 py-16">
         <motion.h2
           initial={{ opacity: 0 }}
@@ -90,7 +87,6 @@ function App() {
         </div>
       </section>
 
-      {/* Модалка записи */}
       <BookingModal
         isOpen={isBookingModalOpen}
         onClose={() => setIsBookingModalOpen(false)}
