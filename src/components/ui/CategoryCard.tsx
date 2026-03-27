@@ -1,75 +1,46 @@
 import { motion } from 'framer-motion';
-import { ServiceIcon } from './ServiceIcons';
 
 interface CategoryCardProps {
   category: {
     id: string;
     name: string;
     description: string;
-    color: string;
+    count: number;
   };
   onClick: () => void;
 }
 
 export const CategoryCard = ({ category, onClick }: CategoryCardProps) => {
-  const colorClasses: Record<string, { gradient: string; bg: string; iconBg: string }> = {
-    amber: {
-      gradient: 'from-amber-500 to-orange-500',
-      bg: 'hover:shadow-amber-200/50',
-      iconBg: 'bg-amber-100 group-hover:bg-amber-200'
-    },
-    emerald: {
-      gradient: 'from-emerald-500 to-teal-500',
-      bg: 'hover:shadow-emerald-200/50',
-      iconBg: 'bg-emerald-100 group-hover:bg-emerald-200'
-    },
-    purple: {
-      gradient: 'from-purple-500 to-pink-500',
-      bg: 'hover:shadow-purple-200/50',
-      iconBg: 'bg-purple-100 group-hover:bg-purple-200'
-    },
-    pink: {
-      gradient: 'from-rose-500 to-pink-500',
-      bg: 'hover:shadow-rose-200/50',
-      iconBg: 'bg-rose-100 group-hover:bg-rose-200'
-    },
-  };
-
-  const config = colorClasses[category.color];
-
   return (
-    <motion.div
+    <motion.button
       initial={{ opacity: 0, y: 20 }}
       whileInView={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.5 }}
-      whileHover={{ y: -8 }}
+      viewport={{ once: true }}
+      whileHover={{ y: -4 }}
       onClick={onClick}
-      className="group cursor-pointer"
+      className="group w-full text-left"
     >
-      <div className={`relative bg-white rounded-2xl shadow-lg overflow-hidden transition-all duration-300 hover:shadow-2xl ${config.bg}`}>
-        <div className={`absolute top-0 left-0 right-0 h-2 bg-gradient-to-r ${config.gradient}`} />
+      <div className="relative overflow-hidden bg-white rounded-2xl border border-gray-100 p-6 card-hover">
+        <div className="absolute top-0 right-0 w-32 h-32 bg-gray-50 rounded-full -mr-16 -mt-16 opacity-50 group-hover:scale-150 transition-transform duration-500" />
         
-        <div className="p-8 text-center">
-          <div className={`w-20 h-20 mx-auto mb-6 rounded-2xl ${config.iconBg} flex items-center justify-center transition-all duration-300 group-hover:scale-110`}>
-            <ServiceIcon category={category.id} className="w-10 h-10" />
+        <div className="relative z-10">
+          <div className="text-sm text-gray-400 mb-2 tracking-wide">
+            {category.count} услуг
           </div>
-          
-          <h3 className="text-2xl font-bold mb-3 text-gray-800 group-hover:text-pink-600 transition-colors">
+          <h3 className="text-xl font-medium text-gray-900 mb-2 group-hover:text-gray-600 transition-colors">
             {category.name}
           </h3>
-          
-          <p className="text-gray-500 text-sm leading-relaxed">
+          <p className="text-gray-400 text-sm leading-relaxed">
             {category.description}
           </p>
-          
-          <div className="mt-6 inline-flex items-center text-pink-500 text-sm font-medium opacity-0 group-hover:opacity-100 transition-all duration-300">
-            <span>Выбрать услуги</span>
+          <div className="mt-4 flex items-center text-gray-400 text-sm group-hover:text-gray-600 transition-colors">
+            <span>Подробнее</span>
             <svg className="w-4 h-4 ml-1 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9 5l7 7-7 7" />
             </svg>
           </div>
         </div>
       </div>
-    </motion.div>
+    </motion.button>
   );
 };
