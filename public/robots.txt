@@ -1,0 +1,9 @@
+# robots.txt для Beauty Studio
+User-agent: *
+Allow: /
+Disallow: /profile
+Disallow: /admin
+Disallow: /api/
+
+Sitemap: https://beauty-studio.ru/sitemap.xml
+Host: https://beauty-studio.ru
