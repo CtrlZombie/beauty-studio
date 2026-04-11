@@ -67,7 +67,7 @@ export const BookingForm = ({
     const { data, error } = await supabase
       .from("appointments")
       .select("id")
-      .eq("appointment_date", date)
+      .eq('appointment_date', date)
       .eq("appointment_time", time)
       .neq("status", "cancelled");
 
@@ -109,7 +109,10 @@ export const BookingForm = ({
 
     setIsSubmitting(true);
 
-    const appointmentDate = selectedDate.toISOString().split("T")[0];
+    const year = selectedDate.getFullYear();
+    const month = String(selectedDate.getMonth() + 1).padStart(2, "0");
+    const day = String(selectedDate.getDate()).padStart(2, "0");
+    const appointmentDate = `${year}-${month}-${day}`;
 
     try {
       // Проверяем, не занят ли слот
