@@ -67,7 +67,7 @@ export const BookingForm = ({
     const { data, error } = await supabase
       .from("appointments")
       .select("id")
-      .eq('appointment_date', date)
+      .eq("appointment_date", date)
       .eq("appointment_time", time)
       .neq("status", "cancelled");
 
@@ -157,6 +157,31 @@ export const BookingForm = ({
         .insert([appointment]);
 
       if (error) throw error;
+
+      // --- ОТПРАВКА УВЕДОМЛЕНИЯ В TELEGRAM ---
+      try {
+        const functionUrl = `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/telegram-notify`;
+        await fetch(functionUrl, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            action: "new-booking",
+            data: {
+              client_name: formData.client_name,
+              client_phone: formData.client_phone,
+              service_name: selectedService.name,
+              appointment_date: selectedDate.toLocaleDateString("ru-RU"),
+              appointment_time: selectedTime,
+              price: selectedService.price,
+              telegram_chat_id: formData.receive_notifications
+                ? formData.telegram_username
+                : null,
+            },
+          }),
+        });
+      } catch (telegramErr) {
+        console.error("Telegram notify error:", telegramErr);
+      }
 
       toast.success("✅ Запись создана!");
       resetBooking();
