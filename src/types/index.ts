@@ -1,6 +1,6 @@
 export interface Service {
   id: string;
-  category: 'ears' | 'eyebrows' | 'lashes' | 'sugaring';
+  category: 'ears' | 'eyebrows' | 'lashes' | 'sugaring' | 'piercing';
   name: string;
   price: number;
   duration: number; // minutes

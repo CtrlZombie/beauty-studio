@@ -1,99 +1,90 @@
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 
+interface Work {
+  id: number;
+  title: string;
+  image: string;
+}
+
+const works: Work[] = [
+  { id: 1, title: 'Идеальные брови', image: '/images/portfolio/example_brow.webp' },
+  { id: 2, title: 'Ламинирование ресниц', image: '/images/portfolio/example_lashes.webp' },
+  { id: 3, title: 'Прокол ушей', image: '/images/portfolio/example_ears.webp' },
+  { id: 4, title: 'Ресницы', image: '/images/portfolio/example_brush.webp' },
+  { id: 5, title: 'Пирсинг пупка', image: '/images/portfolio/example_pearsing.webp' },
+  { id: 6, title: 'Коррекция бровей', image: '/images/portfolio/example_brow2.webp' },
+];
+
 export const Portfolio = () => {
   const [selectedImage, setSelectedImage] = useState<number | null>(null);
 
-  const works = [
-    { id: 1, category: 'Брови', before: 'https://placehold.co/600x400/FEE2E2/EC489A?text=До', after: 'https://placehold.co/600x400/EC489A/FFFFFF?text=После' },
-    { id: 2, category: 'Ресницы', before: 'https://placehold.co/600x400/FEE2E2/EC489A?text=До', after: 'https://placehold.co/600x400/EC489A/FFFFFF?text=После' },
-    { id: 3, category: 'Пирсинг', before: 'https://placehold.co/600x400/FEE2E2/EC489A?text=До', after: 'https://placehold.co/600x400/EC489A/FFFFFF?text=После' },
-    { id: 4, category: 'Шугаринг', before: 'https://placehold.co/600x400/FEE2E2/EC489A?text=До', after: 'https://placehold.co/600x400/EC489A/FFFFFF?text=После' },
-    { id: 5, category: 'Брови', before: 'https://placehold.co/600x400/FEE2E2/EC489A?text=До', after: 'https://placehold.co/600x400/EC489A/FFFFFF?text=После' },
-    { id: 6, category: 'Ресницы', before: 'https://placehold.co/600x400/FEE2E2/EC489A?text=До', after: 'https://placehold.co/600x400/EC489A/FFFFFF?text=После' },
-  ];
-
   return (
-    <section className="container-custom py-20 bg-gray-50 rounded-3xl my-10">
-      <motion.div
-        initial={{ opacity: 0, y: 30 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.6 }}
-        className="text-center mb-12"
-      >
-        <span className="text-sm text-pink-500 uppercase tracking-wider">Наши работы</span>
-        <h2 className="text-3xl font-bold mt-2">Портфолио</h2>
-        <p className="text-gray-500 mt-2 max-w-2xl mx-auto">
-          Результаты работ до и после. Каждый случай индивидуален
-        </p>
-      </motion.div>
+    <section className="container-custom py-20">
+      <div className="max-w-3xl mx-auto text-center mb-12">
+        <div className="w-12 h-px bg-accent-gold/40 mx-auto mb-8" />
+        <h2 className="font-display text-3xl font-light text-text-primary mb-4">Наши работы</h2>
+        <p className="text-text-muted text-sm tracking-wide">Результаты, которыми мы гордимся</p>
+      </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         {works.map((work, index) => (
           <motion.div
             key={work.id}
-            initial={{ opacity: 0, y: 20 }}
+            initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
-            transition={{ delay: index * 0.1 }}
+            viewport={{ once: true, margin: "-50px" }}
+            transition={{ delay: index * 0.05, duration: 0.5 }}
             className="group cursor-pointer"
             onClick={() => setSelectedImage(work.id)}
           >
-            <div className="relative overflow-hidden rounded-xl shadow-lg">
-              <div className="grid grid-cols-2">
-                <img src={work.before} alt="До" className="w-full h-64 object-cover" />
-                <img src={work.after} alt="После" className="w-full h-64 object-cover" />
-              </div>
-              <div className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
-                <span className="text-white font-medium">Посмотреть детали</span>
-              </div>
-              <div className="absolute top-2 left-2 bg-white/90 px-2 py-1 rounded text-xs font-medium">
-                {work.category}
+            <div className="relative overflow-hidden bg-background-secondary rounded-2xl">
+              <img
+                src={work.image}
+                alt={work.title}
+                className="w-full aspect-[4/5] object-cover transition-all duration-700 group-hover:scale-105"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-text-primary/40 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+              <div className="absolute bottom-0 left-0 right-0 p-5 translate-y-full group-hover:translate-y-0 transition-transform duration-500">
+                <p className="text-white text-sm tracking-wide font-light">{work.title}</p>
+                <div className="w-8 h-px bg-accent-gold mt-2" />
               </div>
             </div>
           </motion.div>
         ))}
       </div>
 
-      {/* Модальное окно с деталями */}
       <AnimatePresence>
         {selectedImage && (
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="fixed inset-0 z-50 bg-black/80 flex items-center justify-center p-4"
+            className="fixed inset-0 z-50 bg-black/80 flex items-center justify-center p-4 cursor-pointer"
             onClick={() => setSelectedImage(null)}
           >
             <motion.div
-              initial={{ scale: 0.9 }}
-              animate={{ scale: 1 }}
-              exit={{ scale: 0.9 }}
-              className="bg-white rounded-2xl max-w-4xl w-full overflow-hidden"
+              initial={{ scale: 0.95, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              exit={{ scale: 0.95, opacity: 0 }}
+              className="relative max-w-4xl w-full bg-white rounded-2xl overflow-hidden"
               onClick={(e) => e.stopPropagation()}
             >
-              <div className="grid md:grid-cols-2">
-                <img
-                  src={works.find(w => w.id === selectedImage)?.before}
-                  alt="До"
-                  className="w-full h-96 object-cover"
-                />
-                <img
-                  src={works.find(w => w.id === selectedImage)?.after}
-                  alt="После"
-                  className="w-full h-96 object-cover"
-                />
+              <img
+                src={works.find(w => w.id === selectedImage)?.image}
+                alt={works.find(w => w.id === selectedImage)?.title}
+                className="w-full h-auto"
+              />
+              <div className="absolute bottom-0 left-0 right-0 p-5 bg-gradient-to-t from-black/80 to-transparent">
+                <p className="text-white text-lg font-light">{works.find(w => w.id === selectedImage)?.title}</p>
+                <div className="w-12 h-px bg-accent-gold mt-2" />
               </div>
-              <div className="p-4 text-center">
-                <p className="text-gray-600">
-                  {works.find(w => w.id === selectedImage)?.category}
-                </p>
-                <button
-                  onClick={() => setSelectedImage(null)}
-                  className="mt-4 text-pink-500 hover:text-pink-600"
-                >
-                  Закрыть
-                </button>
-              </div>
+              <button
+                onClick={() => setSelectedImage(null)}
+                className="absolute top-4 right-4 w-8 h-8 rounded-full bg-white/20 backdrop-blur-sm flex items-center justify-center text-white hover:bg-white/30 transition-colors"
+              >
+                ✕
+              </button>
             </motion.div>
           </motion.div>
         )}

@@ -19,7 +19,7 @@ export const AboutMaster = () => {
         <div className="relative">
           <div className="absolute -top-4 -left-4 w-full h-full border-2 border-pink-200 rounded-2xl" />
           <img
-            src="https://sun9-54.userapi.com/s/v1/ig2/bBZH5d5s_r5mdf8uadr8OVIj2jkwzHmdRJGJ1fY6ATNP_3VXv88E_pG30zDw8Fz37X04zW29b0N9Fd_BIAOEaHNO.jpg?quality=95&as=32x54,48x82,72x122,108x184,160x272,240x408,360x612,480x816,540x918,640x1088,720x1224,1080x1835,1280x2175,1391x2364&from=bu&cs=1391x0"
+            src="/images/portfolio/master.webp"
             alt="Мастер"
             className="relative rounded-2xl shadow-xl w-full object-cover aspect-square"
           />
@@ -42,7 +42,7 @@ export const AboutMaster = () => {
               <div key={cert.id} className="group cursor-pointer">
                 <div className="relative overflow-hidden rounded-lg">
                   <img
-                    src={cert.image}
+                    src={'/images/portfolio/brush_sert.webp'}
                     alt={cert.title}
                     className="w-full aspect-[4/3] object-cover transition-transform group-hover:scale-110"
                   />

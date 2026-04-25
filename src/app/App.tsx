@@ -59,6 +59,11 @@ function App() {
       name: 'Шугаринг', 
       description: 'Гладкая и нежная кожа надолго'
     },
+    { 
+      id: 'piercing', 
+      name: 'Пирсинг', 
+      description: 'Стильные украшения для тела' 
+    },
   ];
 
   const filteredServices = selectedCategory
@@ -87,7 +92,7 @@ function App() {
               onClick={() => setSelectedCategory(null)}
               className="text-xl font-light tracking-wide hover:text-gray-600 transition-colors"
             >
-              Beauty Studio
+              Студия красоты Екатерины Сташок
             </button>
             <div className="flex gap-3">
               {user ? (
@@ -181,7 +186,7 @@ function App() {
                     className="text-5xl md:text-7xl font-bold mb-6"
                   >
                     <span className="bg-gradient-to-r from-pink-500 via-purple-500 to-pink-500 bg-clip-text text-transparent">
-                      Beauty Studio
+                      Студия красоты Екатерины Сташок
                     </span>
                   </motion.h1>
                   
