@@ -18,6 +18,7 @@ import { useAuth } from '../contexts/AuthContext';
 import { type Service } from '../types';
 import { SEO } from '../components/SEO';
 import { getPageTitle, getPageDescription } from '../utils/seoHelper';
+import { TrainingRequest } from '../components/ui/TrainingRequest';
 
 function App() {
   const [isBookingModalOpen, setIsBookingModalOpen] = useState(false);
@@ -258,7 +259,7 @@ function App() {
             <Portfolio />
             <Reviews />
             <Map address="Магнитогорск, ул. Доменщиков 13" />
-
+            <TrainingRequest />
             {/* Footer */}
             <footer className="border-t border-gray-100 py-12 mt-16">
               <div className="container-custom">

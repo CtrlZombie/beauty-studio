@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { supabase } from '../../lib/supabase';
 import { useAuth } from '../../contexts/AuthContext';
 import { ServicesManager } from './ServicesManager';
+import { TrainingRequestsManager } from './TrainingRequestsManager';
 
 interface Appointment {
   id: string;
@@ -22,7 +23,7 @@ export const AdminPanel = () => {
   const [loading, setLoading] = useState(true);
   const [filter, setFilter] = useState('all');
   const [search, setSearch] = useState('');
-  const [activeTab, setActiveTab] = useState<'appointments' | 'services'>('appointments');
+  const [activeTab, setActiveTab] = useState<'appointments' | 'services' | 'trainings'>('appointments');
 
   useEffect(() => {
     if (isAdmin) {
@@ -39,7 +40,6 @@ export const AdminPanel = () => {
         .order('appointment_date', { ascending: false });
 
       const { data, error } = await query;
-      
       if (error) throw error;
       setAppointments(data || []);
     } catch (error) {
@@ -55,12 +55,8 @@ export const AdminPanel = () => {
         .from('appointments')
         .update({ status: newStatus })
         .eq('id', id);
-      
       if (error) throw error;
-      
-      setAppointments(appointments.map(app => 
-        app.id === id ? { ...app, status: newStatus } : app
-      ));
+      setAppointments(appointments.map(app => app.id === id ? { ...app, status: newStatus } : app));
     } catch (error) {
       console.error('Error updating status:', error);
     }
@@ -68,10 +64,10 @@ export const AdminPanel = () => {
 
   const getStatusBadge = (status: string) => {
     const badges: Record<string, string> = {
-      pending: 'bg-yellow-100 text-yellow-800',
-      confirmed: 'bg-green-100 text-green-800',
-      cancelled: 'bg-red-100 text-red-800',
-      completed: 'bg-blue-100 text-blue-800',
+      pending: 'bg-accent-gold/10 text-accent-gold',
+      confirmed: 'bg-success/10 text-success',
+      cancelled: 'bg-error/10 text-error',
+      completed: 'bg-accent-deep/10 text-accent-deep',
     };
     const texts: Record<string, string> = {
       pending: 'Ожидает',
@@ -113,110 +109,97 @@ export const AdminPanel = () => {
   if (!isAdmin) {
     return (
       <div className="text-center py-12">
-        <h2 className="text-2xl font-light mb-4">Доступ запрещен</h2>
-        <p className="text-gray-500">У вас нет прав администратора</p>
+        <h2 className="font-display text-2xl font-light text-text-primary mb-4">Доступ запрещен</h2>
+        <p className="text-text-muted">У вас нет прав администратора</p>
       </div>
     );
   }
 
   return (
     <div className="container mx-auto px-4 py-8">
-      <h1 className="text-3xl font-light mb-8">Админ-панель</h1>
-      
+      <h1 className="font-display text-3xl font-light text-text-primary mb-8">Админ-панель</h1>
+
       {/* Вкладки */}
-      <div className="flex gap-4 mb-6 border-b border-gray-100">
+      <div className="flex gap-6 mb-8 border-b border-text-muted/10">
         <button
           onClick={() => setActiveTab('appointments')}
-          className={`pb-3 px-2 text-sm transition-colors ${
+          className={`pb-3 text-sm transition-all duration-300 ${
             activeTab === 'appointments'
-              ? 'border-b-2 border-gray-900 text-gray-900'
-              : 'text-gray-400 hover:text-gray-600'
+              ? 'border-b border-accent-gold text-text-primary'
+              : 'text-text-muted hover:text-text-primary'
           }`}
         >
           Записи
         </button>
         <button
           onClick={() => setActiveTab('services')}
-          className={`pb-3 px-2 text-sm transition-colors ${
+          className={`pb-3 text-sm transition-all duration-300 ${
             activeTab === 'services'
-              ? 'border-b-2 border-gray-900 text-gray-900'
-              : 'text-gray-400 hover:text-gray-600'
+              ? 'border-b border-accent-gold text-text-primary'
+              : 'text-text-muted hover:text-text-primary'
           }`}
         >
           Услуги
         </button>
+        <button
+          onClick={() => setActiveTab('trainings')}
+          className={`pb-3 text-sm transition-all duration-300 ${
+            activeTab === 'trainings'
+              ? 'border-b border-accent-gold text-text-primary'
+              : 'text-text-muted hover:text-text-primary'
+          }`}
+        >
+          Обучение
+        </button>
       </div>
 
-      {activeTab === 'appointments' ? (
+      {activeTab === 'appointments' && (
         <>
           {/* Статистика */}
           <div className="grid grid-cols-2 md:grid-cols-5 gap-4 mb-8">
-            <div className="bg-white rounded-xl p-4 shadow-sm border border-gray-100">
-              <div className="text-2xl font-semibold text-gray-800">{stats.total}</div>
-              <div className="text-sm text-gray-400">Всего записей</div>
+            <div className="bg-white rounded-xl p-4 shadow-soft border border-text-muted/5">
+              <div className="text-2xl font-light text-text-primary">{stats.total}</div>
+              <div className="text-xs text-text-muted mt-1">Всего записей</div>
             </div>
-            <div className="bg-white rounded-xl p-4 shadow-sm border border-gray-100">
-              <div className="text-2xl font-semibold text-yellow-600">{stats.pending}</div>
-              <div className="text-sm text-gray-400">Ожидают</div>
+            <div className="bg-white rounded-xl p-4 shadow-soft border border-text-muted/5">
+              <div className="text-2xl font-light text-accent-gold">{stats.pending}</div>
+              <div className="text-xs text-text-muted mt-1">Ожидают</div>
             </div>
-            <div className="bg-white rounded-xl p-4 shadow-sm border border-gray-100">
-              <div className="text-2xl font-semibold text-green-600">{stats.confirmed}</div>
-              <div className="text-sm text-gray-400">Подтверждено</div>
+            <div className="bg-white rounded-xl p-4 shadow-soft border border-text-muted/5">
+              <div className="text-2xl font-light text-success">{stats.confirmed}</div>
+              <div className="text-xs text-text-muted mt-1">Подтверждено</div>
             </div>
-            <div className="bg-white rounded-xl p-4 shadow-sm border border-gray-100">
-              <div className="text-2xl font-semibold text-blue-600">{stats.completed}</div>
-              <div className="text-sm text-gray-400">Выполнено</div>
+            <div className="bg-white rounded-xl p-4 shadow-soft border border-text-muted/5">
+              <div className="text-2xl font-light text-accent-deep">{stats.completed}</div>
+              <div className="text-xs text-text-muted mt-1">Выполнено</div>
             </div>
-            <div className="bg-white rounded-xl p-4 shadow-sm border border-gray-100">
-              <div className="text-2xl font-semibold text-gray-800">{stats.totalIncome} ₽</div>
-              <div className="text-sm text-gray-400">Доход</div>
+            <div className="bg-white rounded-xl p-4 shadow-soft border border-text-muted/5">
+              <div className="text-2xl font-light text-text-primary">{stats.totalIncome} ₽</div>
+              <div className="text-xs text-text-muted mt-1">Доход</div>
             </div>
           </div>
-          
+
           {/* Фильтры */}
-          <div className="flex flex-wrap gap-3 mb-6">
-            <button
-              onClick={() => setFilter('all')}
-              className={`px-4 py-2 rounded-full text-sm transition-colors ${
-                filter === 'all' ? 'bg-gray-900 text-white' : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
-              }`}
-            >
-              Все
-            </button>
-            <button
-              onClick={() => setFilter('pending')}
-              className={`px-4 py-2 rounded-full text-sm transition-colors ${
-                filter === 'pending' ? 'bg-yellow-500 text-white' : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
-              }`}
-            >
-              Ожидают
-            </button>
-            <button
-              onClick={() => setFilter('confirmed')}
-              className={`px-4 py-2 rounded-full text-sm transition-colors ${
-                filter === 'confirmed' ? 'bg-green-500 text-white' : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
-              }`}
-            >
-              Подтверждено
-            </button>
-            <button
-              onClick={() => setFilter('completed')}
-              className={`px-4 py-2 rounded-full text-sm transition-colors ${
-                filter === 'completed' ? 'bg-blue-500 text-white' : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
-              }`}
-            >
-              Выполнено
-            </button>
-            <button
-              onClick={() => setFilter('cancelled')}
-              className={`px-4 py-2 rounded-full text-sm transition-colors ${
-                filter === 'cancelled' ? 'bg-red-500 text-white' : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
-              }`}
-            >
-              Отменено
-            </button>
+          <div className="flex flex-wrap gap-2 mb-6">
+            {['all', 'pending', 'confirmed', 'completed', 'cancelled'].map((status) => (
+              <button
+                key={status}
+                onClick={() => setFilter(status)}
+                className={`px-4 py-1.5 rounded-full text-xs transition-all duration-300 ${
+                  filter === status
+                    ? 'bg-accent-gold text-white'
+                    : 'bg-background-secondary text-text-muted hover:text-text-primary'
+                }`}
+              >
+                {status === 'all' && 'Все'}
+                {status === 'pending' && 'Ожидают'}
+                {status === 'confirmed' && 'Подтверждено'}
+                {status === 'completed' && 'Выполнено'}
+                {status === 'cancelled' && 'Отменено'}
+              </button>
+            ))}
           </div>
-          
+
           {/* Поиск */}
           <div className="mb-6">
             <input
@@ -224,97 +207,77 @@ export const AdminPanel = () => {
               value={search}
               onChange={(e) => setSearch(e.target.value)}
               placeholder="Поиск по имени, телефону или услуге..."
-              className="w-full md:w-96 px-4 py-2 border border-gray-200 rounded-lg focus:outline-none focus:border-gray-400"
+              className="w-full md:w-80 px-4 py-2 bg-white border border-text-muted/20 rounded-xl focus:border-accent-gold focus:outline-none transition-all duration-300 text-sm"
             />
           </div>
-          
+
           {/* Таблица записей */}
-          <div className="bg-white rounded-2xl border border-gray-100 overflow-hidden">
+          <div className="bg-white rounded-2xl border border-text-muted/10 overflow-hidden">
             <div className="overflow-x-auto">
               <table className="w-full">
-                <thead className="bg-gray-50 border-b border-gray-100">
+                <thead className="bg-background-secondary border-b border-text-muted/10">
                   <tr>
-                    <th className="text-left p-4 text-sm font-medium text-gray-500">Клиент</th>
-                    <th className="text-left p-4 text-sm font-medium text-gray-500">Услуга</th>
-                    <th className="text-left p-4 text-sm font-medium text-gray-500">Дата и время</th>
-                    <th className="text-left p-4 text-sm font-medium text-gray-500">Стоимость</th>
-                    <th className="text-left p-4 text-sm font-medium text-gray-500">Статус</th>
-                    <th className="text-left p-4 text-sm font-medium text-gray-500">Действия</th>
+                    <th className="text-left p-4 text-xs font-medium text-text-muted uppercase tracking-wider">Клиент</th>
+                    <th className="text-left p-4 text-xs font-medium text-text-muted uppercase tracking-wider">Услуга</th>
+                    <th className="text-left p-4 text-xs font-medium text-text-muted uppercase tracking-wider">Дата и время</th>
+                    <th className="text-left p-4 text-xs font-medium text-text-muted uppercase tracking-wider">Стоимость</th>
+                    <th className="text-left p-4 text-xs font-medium text-text-muted uppercase tracking-wider">Статус</th>
+                    <th className="text-left p-4 text-xs font-medium text-text-muted uppercase tracking-wider">Действия</th>
                   </tr>
                 </thead>
                 <tbody>
                   {loading ? (
                     <tr>
-                      <td colSpan={6} className="text-center p-8 text-gray-400">
-                        <div className="w-8 h-8 border-2 border-gray-300 border-t-gray-600 rounded-full animate-spin mx-auto" />
+                      <td colSpan={6} className="text-center p-8 text-text-muted">
+                        <div className="w-6 h-6 border border-accent-gold border-t-transparent rounded-full animate-spin mx-auto" />
                       </td>
                     </tr>
                   ) : filteredAppointments.length === 0 ? (
                     <tr>
-                      <td colSpan={6} className="text-center p-8 text-gray-400">
-                        Нет записей
-                      </td>
+                      <td colSpan={6} className="text-center p-8 text-text-muted">Нет записей</td>
                     </tr>
                   ) : (
                     filteredAppointments.map((app) => (
-                      <tr key={app.id} className="border-b border-gray-50 hover:bg-gray-50 transition-colors">
+                      <tr key={app.id} className="border-b border-text-muted/5 hover:bg-background-secondary/50 transition-colors duration-300">
                         <td className="p-4">
-                          <div className="font-medium text-gray-800">{app.client_name}</div>
-                          <div className="text-sm text-gray-400">{app.client_phone}</div>
+                          <div className="font-medium text-text-primary text-sm">{app.client_name}</div>
+                          <div className="text-text-muted text-xs mt-0.5">{app.client_phone}</div>
                         </td>
-                        <td className="p-4 text-gray-600">{app.service_name}</td>
+                        <td className="p-4 text-text-secondary text-sm">{app.service_name}</td>
                         <td className="p-4">
-                          <div>{new Date(app.appointment_date).toLocaleDateString('ru-RU')}</div>
-                          <div className="text-sm text-gray-400">{app.appointment_time}</div>
+                          <div className="text-text-primary text-sm">{new Date(app.appointment_date).toLocaleDateString('ru-RU')}</div>
+                          <div className="text-text-muted text-xs mt-0.5">{app.appointment_time}</div>
                         </td>
-                        <td className="p-4 font-medium text-gray-700">{app.price} ₽</td>
+                        <td className="p-4 text-text-primary text-sm">{app.price} ₽</td>
                         <td className="p-4">{getStatusBadge(app.status)}</td>
                         <td className="p-4">
                           <div className="flex gap-2">
                             {app.status === 'pending' && (
-                              <button
-                                onClick={() => updateStatus(app.id, 'confirmed')}
-                                className="px-3 py-1 bg-green-500 text-white text-xs rounded-lg hover:bg-green-600 transition-colors"
-                              >
-                                Подтвердить
-                              </button>
+                              <button onClick={() => updateStatus(app.id, 'confirmed')} className="px-3 py-1 bg-success/10 text-success text-xs rounded-lg hover:bg-success/20">Подтвердить</button>
                             )}
                             {(app.status === 'pending' || app.status === 'confirmed') && (
-                              <button
-                                onClick={() => updateStatus(app.id, 'cancelled')}
-                                className="px-3 py-1 bg-red-500 text-white text-xs rounded-lg hover:bg-red-600 transition-colors"
-                              >
-                                Отменить
-                              </button>
+                              <button onClick={() => updateStatus(app.id, 'cancelled')} className="px-3 py-1 bg-error/10 text-error text-xs rounded-lg hover:bg-error/20">Отменить</button>
                             )}
                             {app.status === 'confirmed' && (
-                              <button
-                                onClick={() => updateStatus(app.id, 'completed')}
-                                className="px-3 py-1 bg-blue-500 text-white text-xs rounded-lg hover:bg-blue-600 transition-colors"
-                              >
-                                Выполнить
-                              </button>
+                              <button onClick={() => updateStatus(app.id, 'completed')} className="px-3 py-1 bg-accent-deep/10 text-accent-deep text-xs rounded-lg hover:bg-accent-deep/20">Выполнить</button>
                             )}
                           </div>
-                         </td>
-                       </tr>
+                        </td>
+                      </tr>
                     ))
                   )}
                 </tbody>
               </table>
             </div>
           </div>
-          
-          <button
-            onClick={loadAppointments}
-            className="mt-6 text-sm text-gray-400 hover:text-gray-600 transition-colors"
-          >
+          <button onClick={loadAppointments} className="mt-6 text-xs text-text-muted hover:text-accent-gold transition-colors duration-300">
             Обновить список
           </button>
         </>
-      ) : (
-        <ServicesManager />
       )}
+
+      {activeTab === 'services' && <ServicesManager />}
+      {activeTab === 'trainings' && <TrainingRequestsManager />}
     </div>
   );
 };
