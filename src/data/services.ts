@@ -1,4 +1,4 @@
-import {type Service } from '../types';
+import { type Service } from '../types';
 
 export const services: Service[] = [
   // Прокол ушей
@@ -29,4 +29,11 @@ export const services: Service[] = [
   { id: 'sugar-bikini-underarms', category: 'sugaring', name: 'Глубокое бикини + подмышки', price: 1100, duration: 55 },
   { id: 'sugar-bikini-underarms-leg', category: 'sugaring', name: 'Глубокое бикини + подмышки + голень', price: 1600, duration: 70 },
   { id: 'sugar-bikini-underarms-legs-full', category: 'sugaring', name: 'Глубокое бикини + подмышки + ноги', price: 1800, duration: 85 },
+
+  // Пирсинг (новая категория)
+  { id: 'piercing-navel', category: 'piercing', name: 'Прокол пупка (навель)', price: 1500, duration: 30, description: 'Популярный пирсинг для украшения живота.' },
+  { id: 'piercing-nose', category: 'piercing', name: 'Прокол носа (ноздря)', price: 1200, duration: 20, description: 'Изящный акцент для вашего образа.' },
+  { id: 'piercing-intimate', category: 'piercing', name: 'Интимный пирсинг', price: 2500, duration: 45, description: 'Требует особой консультации и гигиены.' },
+  { id: 'piercing-lip', category: 'piercing', name: 'Прокол губы (лабрет)', price: 1300, duration: 25, description: 'Стильное и популярное украшение для губ.' },
+  { id: 'piercing-tongue', category: 'piercing', name: 'Прокол языка', price: 1800, duration: 30, description: 'Один из самых быстрозаживающих пирсингов.' },
 ];

@@ -17,6 +17,8 @@ const categories = [
   { id: 'eyebrows', name: 'Брови' },
   { id: 'lashes', name: 'Ресницы' },
   { id: 'sugaring', name: 'Шугаринг' },
+  { id: 'piercing', name: 'Пирсинг' },
+
 ];
 
 export const ServicesManager = () => {
