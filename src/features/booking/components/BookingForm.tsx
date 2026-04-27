@@ -4,6 +4,7 @@ import { toast } from "sonner";
 import { useBookingStore } from "../store/bookingStore";
 import { Button } from "../../../components/ui/Button";
 import { supabase } from "../../../lib/supabase";
+import { formatPhoneNumber } from '../../../lib/phoneFormatter';
 
 interface BookingFormProps {
   selectedDate: Date;
@@ -30,32 +31,6 @@ export const BookingForm = ({
     client_name?: string;
     client_phone?: string;
   }>({});
-
-  // Функция для форматирования телефона (пользователь вводит только цифры, +7 ставится автоматически)
-  const formatPhoneNumber = (value: string) => {
-    // Удаляем все нецифровые символы
-    let digits = value.replace(/\D/g, "");
-
-    // Если пользователь начал вводить номер, всегда показываем +7
-    if (digits.length === 0) return "+7";
-
-    // Убираем первые цифры, если пользователь ввел 7 или 8 в начале
-    if (digits.startsWith("7") || digits.startsWith("8")) {
-      digits = digits.slice(1);
-    }
-
-    // Ограничиваем 10 цифрами (после +7)
-    const limitedDigits = digits.slice(0, 10);
-
-    // Форматируем по маске +7 (XXX) XXX-XX-XX
-    if (limitedDigits.length === 0) return "+7";
-    if (limitedDigits.length <= 3) return `+7 (${limitedDigits}`;
-    if (limitedDigits.length <= 6)
-      return `+7 (${limitedDigits.slice(0, 3)}) ${limitedDigits.slice(3)}`;
-    if (limitedDigits.length <= 8)
-      return `+7 (${limitedDigits.slice(0, 3)}) ${limitedDigits.slice(3, 6)}-${limitedDigits.slice(6)}`;
-    return `+7 (${limitedDigits.slice(0, 3)}) ${limitedDigits.slice(3, 6)}-${limitedDigits.slice(6, 8)}-${limitedDigits.slice(8, 10)}`;
-  };
 
   // Обработчик изменения телефона
   const handlePhoneChange = (e: React.ChangeEvent<HTMLInputElement>) => {
