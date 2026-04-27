@@ -7,9 +7,9 @@ interface HeroSectionProps {
 
 export const HeroSection = ({ onQuickBooking }: HeroSectionProps) => {
   return (
-    <section className="relative min-h-screen flex items-center justify-center overflow-hidden bg-gradient-to-br from-blue-50 via-white to-indigo-50">
-      <div className="absolute top-20 left-10 w-72 h-72 bg-blue-300/20 rounded-full blur-3xl animate-pulse" />
-      <div className="absolute bottom-20 right-10 w-96 h-96 bg-indigo-300/20 rounded-full blur-3xl animate-pulse" style={{ animationDelay: '1s' }} />
+    <section className="relative min-h-screen flex items-center justify-center overflow-hidden bg-gradient-to-br from-pink-100 via-white to-purple-100">
+      <div className="absolute top-20 left-10 w-72 h-72 bg-pink-300/20 rounded-full blur-3xl animate-pulse" />
+      <div className="absolute bottom-20 right-10 w-96 h-96 bg-purple-300/20 rounded-full blur-3xl animate-pulse" style={{ animationDelay: '1s' }} />
       
       <div className="container mx-auto px-4 relative z-10">
         <motion.div
@@ -24,7 +24,7 @@ export const HeroSection = ({ onQuickBooking }: HeroSectionProps) => {
             transition={{ duration: 0.5, delay: 0.2 }}
             className="inline-flex items-center gap-2 bg-white/90 backdrop-blur-sm rounded-full px-4 py-2 mb-8 shadow-lg"
           >
-            <span className="w-2 h-2 bg-blue-500 rounded-full animate-pulse" />
+            <span className="w-2 h-2 bg-pink-500 rounded-full animate-pulse" />
             <span className="text-sm text-gray-700 font-medium">Принимаем записи онлайн</span>
           </motion.div>
           
@@ -34,7 +34,7 @@ export const HeroSection = ({ onQuickBooking }: HeroSectionProps) => {
             transition={{ delay: 0.3, duration: 0.6 }}
             className="text-5xl md:text-7xl font-bold mb-6"
           >
-            <span className="bg-gradient-to-r from-blue-500 via-indigo-500 to-blue-500 bg-clip-text text-transparent">
+            <span className="bg-gradient-to-r from-pink-500 via-purple-500 to-pink-500 bg-clip-text text-transparent">
               Студия красоты Екатерины Сташок
             </span>
           </motion.h1>

@@ -1,0 +1,46 @@
+/* Dark Elegant Luxury Theme Variables */
+
+:root {
+  --background-primary: #0a0a0a;
+  --background-secondary: #1a1a1a;
+  --text-primary: #f5f5f5;
+  --text-secondary: #e5e5e5;
+  --text-accent: #d4af7f;
+  --accent-gold: #d4af7f;
+  --accent-gold-light: #c9a66b;
+  --accent-gold-dark: #b38b5d;
+  --border-color: #333333;
+}
+
+/* Modern Typography */
+
+.font-heading {
+  font-family: 'Playfair Display', serif;
+}
+
+.font-body {
+  font-family: 'Satoshi', sans-serif;
+}
+
+/* Enhanced Components */
+
+.btn-primary {
+  background-color: var(--accent-gold);
+  color: var(--text-primary);
+  border: 1px solid var(--accent-gold-light);
+  transition: all 0.3s ease;
+}
+
+.btn-primary:hover {
+  background-color: var(--accent-gold-dark);
+  border-color: var(--accent-gold);
+}
+
+.card {
+  background-color: var(--background-secondary);
+  border: 1px solid var(--border-color);
+}
+
+.section-title::after {
+  background-color: var(--accent-gold);
+}
