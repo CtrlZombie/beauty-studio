@@ -23,7 +23,8 @@ export const Portfolio = () => {
     <section className="container-custom py-20">
       <div className="max-w-3xl mx-auto text-center mb-12">
         <div className="w-12 h-px bg-pink-200 mx-auto mb-8" />
-        <h2 className="text-3xl font-light text-gray-800 mb-4">Наши работы</h2>
+        {/* Заголовок унифицирован с «Екатерина Сташок»: размер 3xl, жирность bold, цвет gray-900 */}
+        <h2 className="text-3xl font-bold text-gray-900 mb-4">Наши работы</h2>
         <p className="text-gray-500 text-sm tracking-wide">Результаты, которыми мы гордимся</p>
       </div>
 

@@ -10,7 +10,7 @@ interface SEOProps {
 }
 
 export const SEO = ({
-  title = "Beauty Studio | Салон красоты в Магнитогорске",
+  title = "Студия красоты Екатерины Сташок. Магнитогорск",
   description = "Профессиональный уход за собой. Запись на брови, ресницы, шугаринг, прокол ушей. Уютная атмосфера, премиальные материалы. Запишитесь онлайн!",
   keywords = "салон красоты, брови, ресницы, шугаринг, прокол ушей, Магнитогорск, beauty studio, запись онлайн",
   image = "/og-image.jpg",
@@ -21,6 +21,7 @@ export const SEO = ({
     <Helmet>
       {/* Основные мета-теги */}
       <title>{title}</title>
+      <link rel="icon" href="/images/es_logo.svg" />
       <meta name="description" content={description} />
       <meta name="keywords" content={keywords} />
       <meta name="viewport" content="width=device-width, initial-scale=1.0" />

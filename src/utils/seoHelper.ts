@@ -9,7 +9,7 @@ export const getPageTitle = (page: string | null) => {
     sugaring: "Шугаринг | Beauty Studio",
   };
   
-  return titles[page || ''] || "Beauty Studio | Салон красоты в Магнитогорске";
+  return titles[page || ''] || "Студия красоты Екатерины Сташок. Магнитогорск";
 };
 
 export const getPageDescription = (page: string | null) => {
