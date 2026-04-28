@@ -22,9 +22,9 @@ export const Portfolio = () => {
   return (
     <section className="container-custom py-20">
       <div className="max-w-3xl mx-auto text-center mb-12">
-        <div className="w-12 h-px bg-accent-gold/40 mx-auto mb-8" />
-        <h2 className="font-display text-3xl font-light text-text-primary mb-4">Наши работы</h2>
-        <p className="text-text-muted text-sm tracking-wide">Результаты, которыми мы гордимся</p>
+        <div className="w-12 h-px bg-pink-200 mx-auto mb-8" />
+        <h2 className="text-3xl font-light text-gray-800 mb-4">Наши работы</h2>
+        <p className="text-gray-500 text-sm tracking-wide">Результаты, которыми мы гордимся</p>
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -38,16 +38,16 @@ export const Portfolio = () => {
             className="group cursor-pointer"
             onClick={() => setSelectedImage(work.id)}
           >
-            <div className="relative overflow-hidden bg-background-secondary rounded-2xl">
+            <div className="relative overflow-hidden bg-gray-50 rounded-2xl">
               <img
                 src={work.image}
                 alt={work.title}
                 className="w-full aspect-[4/5] object-cover transition-all duration-700 group-hover:scale-105"
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-text-primary/40 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
               <div className="absolute bottom-0 left-0 right-0 p-5 translate-y-full group-hover:translate-y-0 transition-transform duration-500">
                 <p className="text-white text-sm tracking-wide font-light">{work.title}</p>
-                <div className="w-8 h-px bg-accent-gold mt-2" />
+                <div className="w-8 h-px bg-pink-400 mt-2" />
               </div>
             </div>
           </motion.div>
@@ -77,7 +77,7 @@ export const Portfolio = () => {
               />
               <div className="absolute bottom-0 left-0 right-0 p-5 bg-gradient-to-t from-black/80 to-transparent">
                 <p className="text-white text-lg font-light">{works.find(w => w.id === selectedImage)?.title}</p>
-                <div className="w-12 h-px bg-accent-gold mt-2" />
+                <div className="w-12 h-px bg-pink-400 mt-2" />
               </div>
               <button
                 onClick={() => setSelectedImage(null)}

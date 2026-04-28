@@ -25,9 +25,13 @@ export const Header = ({
         <div className="flex justify-between items-center">
           <button 
             onClick={onLogoClick}
-            className="text-xl font-light tracking-wide hover:text-gray-600 transition-colors"
+            className="flex items-center hover:opacity-80 transition-opacity"
           >
-            Студия красоты Екатерины Сташок
+            <img 
+              src="/images/es_logo.svg" 
+              alt="Логотип студии красоты Екатерины Сташок"
+              className="h-10 w-auto md:h-12"
+            />
           </button>
           <div className="flex gap-3">
             {user ? (
