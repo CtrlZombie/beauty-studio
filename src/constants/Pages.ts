@@ -1,0 +1,2 @@
+export const PAGE_PROFILE = 'profile';
+export const PAGE_ADMIN = 'admin';

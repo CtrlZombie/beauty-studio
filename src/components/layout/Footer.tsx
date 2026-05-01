@@ -6,7 +6,7 @@ export const Footer = () => {
           {/* Логотип вместо текста Beauty Studio */}
           <div>
             <img 
-              src="/images/es_logo.svg" 
+              src="/src/assets/es_logo.svg" 
               alt="Логотип студии красоты Екатерины Сташок"
               className="h-10 w-auto md:h-12 mb-3"
             />

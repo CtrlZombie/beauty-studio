@@ -36,8 +36,10 @@ export const AuthModal = ({ isOpen, onClose }: AuthModalProps) => {
         await signUp(email, password, fullName);
       }
       onClose();
-    } catch (err: any) {
-      setError(err.message || 'Ошибка авторизации');
+    } catch (err: unknown) {
+      // Обработка ошибки без использования any
+      const errorMessage = err instanceof Error ? err.message : 'Ошибка авторизации';
+      setError(errorMessage);
     } finally {
       setLoading(false);
     }

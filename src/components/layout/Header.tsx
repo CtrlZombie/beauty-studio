@@ -28,7 +28,7 @@ export const Header = ({
             className="flex items-center hover:opacity-80 transition-opacity"
           >
             <img 
-              src="/images/es_logo.svg" 
+              src="/src/assets/es_logo.svg" 
               alt="Логотип студии красоты Екатерины Сташок"
               className="h-10 w-auto md:h-12"
             />

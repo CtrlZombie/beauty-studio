@@ -1,20 +1,6 @@
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-
-interface Work {
-  id: number;
-  title: string;
-  image: string;
-}
-
-const works: Work[] = [
-  { id: 1, title: 'Идеальные брови', image: '/images/portfolio/example_brow.webp' },
-  { id: 2, title: 'Ламинирование ресниц', image: '/images/portfolio/example_lashes.webp' },
-  { id: 3, title: 'Прокол ушей', image: '/images/portfolio/example_ears.webp' },
-  { id: 4, title: 'Ресницы', image: '/images/portfolio/example_brush.webp' },
-  { id: 5, title: 'Пирсинг пупка', image: '/images/portfolio/example_pearsing.webp' },
-  { id: 6, title: 'Коррекция бровей', image: '/images/portfolio/example_brow2.webp' },
-];
+import { WORKS } from '../../constants/Works';
 
 export const Portfolio = () => {
   const [selectedImage, setSelectedImage] = useState<number | null>(null);
@@ -23,13 +9,12 @@ export const Portfolio = () => {
     <section className="container-custom py-20">
       <div className="max-w-3xl mx-auto text-center mb-12">
         <div className="w-12 h-px bg-pink-200 mx-auto mb-8" />
-        {/* Заголовок унифицирован с «Екатерина Сташок»: размер 3xl, жирность bold, цвет gray-900 */}
         <h2 className="text-3xl font-bold text-gray-900 mb-4">Наши работы</h2>
         <p className="text-gray-500 text-sm tracking-wide">Результаты, которыми мы гордимся</p>
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        {works.map((work, index) => (
+        {WORKS.map((work, index) => (
           <motion.div
             key={work.id}
             initial={{ opacity: 0, y: 30 }}
@@ -72,12 +57,12 @@ export const Portfolio = () => {
               onClick={(e) => e.stopPropagation()}
             >
               <img
-                src={works.find(w => w.id === selectedImage)?.image}
-                alt={works.find(w => w.id === selectedImage)?.title}
+                src={WORKS.find(w => w.id === selectedImage)?.image}
+                alt={WORKS.find(w => w.id === selectedImage)?.title}
                 className="w-full h-auto"
               />
               <div className="absolute bottom-0 left-0 right-0 p-5 bg-gradient-to-t from-black/80 to-transparent">
-                <p className="text-white text-lg font-light">{works.find(w => w.id === selectedImage)?.title}</p>
+                <p className="text-white text-lg font-light">{WORKS.find(w => w.id === selectedImage)?.title}</p>
                 <div className="w-12 h-px bg-pink-400 mt-2" />
               </div>
               <button
